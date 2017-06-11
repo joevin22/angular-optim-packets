@@ -1,0 +1,59 @@
+<md-toolbar color="primary">
+  <span>{{title}}</span>
+</md-toolbar>
+
+<div class="wrapper">
+
+  <form (ngSubmit)="getPackets()">
+  <md-card class="main-toolbar">
+      <md-input-container>
+        <input mdInput [(ngModel)]="itemValue" placeholder="Articles" name="items">
+      </md-input-container>
+
+      <span></span>
+
+      <button type="submit" md-raised-button *ngIf="!loading" color="primary">Organiser</button>
+
+      <md-progress-spinner
+          *ngIf="loading"
+          class="main-loading"
+          [color]="'primary'"
+          [mode]="'indeterminate'">
+      </md-progress-spinner>
+
+  </md-card>
+  </form>
+
+  <md-card class="main-content" *ngIf="data">
+    <div class="main-item">
+      <label>Articles : </label>
+      <span>{{ data.in }}</span>
+    </div>
+    <hr />
+    <div class="main-item">
+      <label>Robot actuel : </label>
+      <span>{{ data.origin }}</span>
+    </div>
+    <div class="main-item">
+      <span></span>
+      <span>{{ data.packets.origin + ' paquets'}} </span>
+    </div>
+    <hr />
+    <div class="main-item">
+      <label>Robot optimisé : </label>
+      <span>{{ data.data }}</span>
+    </div>
+    <div class="main-item">
+      <span></span>
+      <span>{{ data.packets.optimize + ' paquets'}} </span>
+    </div>
+
+  </md-card>
+
+  <md-card class="main-content" *ngIf="error">
+    <div class="main-item" style="color: red; font-weight:bold;">
+      <label>Message : </label>
+      <span>{{ error.message }}</span>
+    </div>
+  </md-card>
+</div>
