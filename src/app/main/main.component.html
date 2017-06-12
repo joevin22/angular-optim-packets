@@ -6,7 +6,7 @@
 
   <form (ngSubmit)="getPackets()">
   <md-card class="main-toolbar">
-      <md-input-container>
+      <md-input-container style="width: 70%;">
         <input mdInput [(ngModel)]="itemValue" placeholder="Articles" name="items">
       </md-input-container>
 
@@ -26,34 +26,52 @@
 
   <md-card class="main-content" *ngIf="data">
     <div class="main-item">
+      <div class="main-item-title">
       <label>Articles : </label>
-      <span>{{ data.in }}</span>
+      </div>
+      <div class="main-item-desc">
+      {{ data.in }}
+      </div>
     </div>
     <hr />
     <div class="main-item">
+      <div class="main-item-title">
       <label>Robot actuel : </label>
-      <span>{{ data.origin }}</span>
+      </div>
+      <div class="main-item-desc">
+      {{ data.origin }}
+      </div>
     </div>
     <div class="main-item">
       <span></span>
-      <span>{{ data.packets.origin + ' paquets'}} </span>
+      <div>
+
+      {{ data.packets.origin + ' paquets'}} 
+      </div>
     </div>
     <hr />
     <div class="main-item">
+      <div class="main-item-title">
       <label>Robot optimisé : </label>
-      <span>{{ data.data }}</span>
+      </div>
+      <div class="main-item-desc">
+      {{ data.data }}
+      </div>
     </div>
     <div class="main-item">
       <span></span>
-      <span>{{ data.packets.optimize + ' paquets'}} </span>
+      <div>
+      {{ data.packets.optimize + ' paquets'}} 
+      </div>
     </div>
-
   </md-card>
 
   <md-card class="main-content" *ngIf="error">
     <div class="main-item" style="color: red; font-weight:bold;">
       <label>Message : </label>
-      <span>{{ error.message }}</span>
+      <div class="main-item-desc">
+      {{ error.message }}
+      </div>
     </div>
   </md-card>
 </div>
