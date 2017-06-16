@@ -1,0 +1,40 @@
+<md-card class="main-content" *ngIf="data">
+  <div class="main-item">
+    <div class="main-item-title">
+    <label>Articles : </label>
+    </div>
+    <div class="main-item-desc">
+    {{ data.in }}
+    </div>
+  </div>
+  <hr />
+  <div class="main-item">
+    <div class="main-item-title">
+    <label>Robot actuel : </label>
+    </div>
+    <div class="main-item-desc">
+    {{ data.origin }}
+    </div>
+  </div>
+  <div class="main-item">
+    <span></span>
+    <div>
+    {{ data.packets.origin + ' paquets'}} 
+    </div>
+  </div>
+  <hr />
+  <div class="main-item">
+    <div class="main-item-title">
+    <label>Robot optimisé : </label>
+    </div>
+    <div class="main-item-desc">
+    {{ data.data }}
+    </div>
+  </div>
+  <div class="main-item">
+    <span></span>
+    <div>
+    {{ data.packets.optimize + ' paquets'}} 
+    </div>
+  </div>
+</md-card>

@@ -1,18 +1,26 @@
-<md-toolbar color="primary">
-  <span>{{title}}</span>
-</md-toolbar>
-
-<div class="wrapper">
-
-  <form (ngSubmit)="getPackets()">
+<form [formGroup]="form" (ngSubmit)="getPackets()" novalidate>
   <md-card class="main-toolbar">
-      <md-input-container style="width: 70%;">
-        <input mdInput [(ngModel)]="itemValue" placeholder="Articles" name="items">
+    <div [style.width]="'70%'">
+      <md-input-container 
+          [style.width]="'100%'">
+            <input mdInput 
+                formControlName="items" 
+                name="items"
+                placeholder="Articles" 
+                [class.has-error]="form.controls['items'].touched && form.controls['items'].invalid" 
+                >
       </md-input-container>
+      <p *ngIf="form.controls['items'].touched && form.controls['items'].invalid" [style.color]="'#f44336'">Valeur saisie incorrecte</p>
+    </div>
 
       <span></span>
 
-      <button type="submit" md-raised-button *ngIf="!loading" color="primary">Organiser</button>
+      <button type="submit" 
+            md-raised-button 
+            color="primary" 
+            [disabled]="form.controls['items'].invalid"
+            *ngIf="!loading"
+          >Organiser</button>
 
       <md-progress-spinner
           *ngIf="loading"
@@ -20,58 +28,16 @@
           [color]="'primary'"
           [mode]="'indeterminate'">
       </md-progress-spinner>
-
   </md-card>
-  </form>
+</form>
 
-  <md-card class="main-content" *ngIf="data">
-    <div class="main-item">
-      <div class="main-item-title">
-      <label>Articles : </label>
-      </div>
-      <div class="main-item-desc">
-      {{ data.in }}
-      </div>
-    </div>
-    <hr />
-    <div class="main-item">
-      <div class="main-item-title">
-      <label>Robot actuel : </label>
-      </div>
-      <div class="main-item-desc">
-      {{ data.origin }}
-      </div>
-    </div>
-    <div class="main-item">
-      <span></span>
-      <div>
+<app-card [data]="data"></app-card>
 
-      {{ data.packets.origin + ' paquets'}} 
-      </div>
+<md-card class="main-content" *ngIf="error">
+  <div class="main-item" [style.color]="'#f44336'" [style.fontWeight]="'bold'">
+    <label>Message : </label>
+    <div class="main-item-desc">
+    {{ error.message }}
     </div>
-    <hr />
-    <div class="main-item">
-      <div class="main-item-title">
-      <label>Robot optimisé : </label>
-      </div>
-      <div class="main-item-desc">
-      {{ data.data }}
-      </div>
-    </div>
-    <div class="main-item">
-      <span></span>
-      <div>
-      {{ data.packets.optimize + ' paquets'}} 
-      </div>
-    </div>
-  </md-card>
-
-  <md-card class="main-content" *ngIf="error">
-    <div class="main-item" style="color: red; font-weight:bold;">
-      <label>Message : </label>
-      <div class="main-item-desc">
-      {{ error.message }}
-      </div>
-    </div>
-  </md-card>
-</div>
+  </div>
+</md-card>

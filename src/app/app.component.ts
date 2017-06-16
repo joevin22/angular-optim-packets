@@ -8,6 +8,8 @@ import { AppService } from 'app/app.service';
 })
 export class AppComponent {
 
+  title : string = 'Angular Optim Packets';
+
   constructor() { }
 
 }

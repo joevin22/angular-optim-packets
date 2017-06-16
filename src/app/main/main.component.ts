@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+
 import { AppService } from 'app/app.service';
 
 @Component({
@@ -9,25 +11,34 @@ import { AppService } from 'app/app.service';
 })
 export class MainComponent implements OnInit {
 
-  title = 'Angular Optim Packets';
+  form: FormGroup;
+
   data: any;
   error: any;
-  itemValue: string;
+
   loading: boolean;
 
-  constructor(public service: AppService) { }
+  constructor(private service: AppService) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.form = new FormGroup({
+      items: new FormControl('', [Validators.pattern(/^([1-9]*)$/)])
+    });
+
+  }
 
   getPackets() {
+    if (this.form.invalid) { return; }
+
     this.loading = true;
-    this.service.getPackets(this.itemValue)
+    this.service.getPackets(this.form.value.items)
       .subscribe((data:any) => {
+
         //console.log('data', data);
         if (data && data.verify === true) {
           this.data = data;
-          this.itemValue = data.in;
           this.error = null;
+          this.form.setValue({items: data.in})
         } else {
           this.data = null;
           this.error = {
@@ -35,17 +46,17 @@ export class MainComponent implements OnInit {
             message: `La chaine suivante n\'est pas correcte : ${data.in}` 
           };          
         }
-        this.loading = false;
+
       }, (err) => { 
+
+        this.data = null;
         this.error = {
           err: err,
           message: 'Une erreur est survenue, veuillez réessayer.'
         };
-        this.data = null;
-        this.loading = false;
-      } 
-    );
-  }
 
+      }, () => this.loading = false);
+
+  }
 
 }
